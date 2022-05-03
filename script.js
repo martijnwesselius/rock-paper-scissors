@@ -81,16 +81,10 @@ function game() {
     }
 
     if (playerScore > computerScore) {
-        console.log(playerScore)
-        console.log(computerScore)
         console.log("Congatulations! You won over 5 rounds")
     } else if (playerScore === computerScore) {
-        console.log(playerScore)
-        console.log(computerScore)
         console.log("It's a tie over 5 rounds")
     } else {
-        console.log(playerScore)
-        console.log(computerScore)
         console.log("Unfortunately you lost over 5 rounds")
     }
 }
