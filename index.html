@@ -4,9 +4,48 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Rock Paper Scissors</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+    <!-- https://michalosman.github.io/rock-paper-scissors/ -->
+
+    <header>
+        Rock Paper Scissors
+    </header>
+
+    <div class="content">
+        <div class="scoreboard">
+            <h2 class="message">
+                You won!
+            </h2>
+            <h3 class="explanation">
+                Rock beats Scissors
+            </h3>
+            <div class="scores-container">
+                <div class="score-box">
+                    <div class="sign" id="player-sign">Rock</div>
+                    <div class="score" id="player-score">Player: 1</div>
+                </div>
+                <div class="score-box">
+                    <div class="sign" id="computer-sign">Scissors</div>
+                    <div class="score" id="computer-score">Computer: 0</div>
+                </div>
+            </div>
+        </div>
+        <div class="buttons">
+            <button>Rock</button>
+            <button>Paper</button>
+            <button>Scissors</button>
+        </div>
+    </div>
+
+    <footer>
+        Copyright © 2022 martijnwesselius
+    </footer>
+
     <script src="script.js"></script>
+
 </body>
 </html>
