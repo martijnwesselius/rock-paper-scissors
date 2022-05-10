@@ -1,92 +1,122 @@
-console.log("Hello World");
+// GAME
 
-function computerPlay() {
-    let rndNum = Math.floor(Math.random()*3);
-    let computerSelection;
+let playerScore = 0;
+let computerScore = 0;
+let roundWinner;
 
-    if (rndNum === 0) {
-        computerSelection = "Rock";
-    } else if (rndNum === 1) {
-        computerSelection = "Paper";
-    } else {
-        computerSelection = "Scissors";
+function getComputerSelection() {
+    let randomNumber = Math.floor(Math.random()*3);
+
+    switch (randomNumber) {
+        case 0:
+            return "Rock";
+        case 1:
+            return "Paper";
+        case 2:
+            return "Scissors";
     }
-
-    return computerSelection
 }
 
 function playRound(playerSelection, computerSelection) {
-    let outcome;
-    let result;
-
-    if (playerSelection.toUpperCase() === "ROCK") {
-        playerSelection = "Rock"
+    if (playerSelection === "Rock") {
         if (computerSelection === "Rock") {
-            outcome = "Tie";
+            roundWinner = "Tie";
         } else if (computerSelection === "Paper") {
-            outcome = "Loss";
+            roundWinner = "Computer";
+            computerScore++;
         } else {
-            outcome = "Win";
-        }
-    } else if (playerSelection.toUpperCase() === "PAPER") {
-        playerSelection = "Paper"
-        if (computerSelection === "Rock") {
-            outcome = "Win";
-        } else if (computerSelection === "Paper") {
-            outcome = "Tie";
-        } else {
-            outcome = "Loss";
-        }
-    } else if (playerSelection.toUpperCase() === "SCISSORS") {
-        playerSelection = "Scissors"
-        if (computerSelection.toUpperCase() === "Rock") {
-            outcome = "Loss";
-        } else if (computerSelection === "Paper") {
-            outcome = "Win";
-        } else {
-            outcome = "Tie";
-        }
-    } else {
-        return ("You made a typing error!");
-    }
-
-    if (outcome === "Win") {
-        result = "You win! " + playerSelection + " beats " + computerSelection;
-    } else if (outcome === "Tie") {
-        result = "It's a tie!";
-    } else {
-        result = "You lose! " + computerSelection + " beats " + playerSelection;
-    }
-
-    return result;
-}
-
-function game() {
-    let playerScore = 0;
-    let computerScore = 0;
-
-    for (let i = 0; i < 5; i++) {
-        let playerSelection = prompt("Rock, paper or scissors?");
-        let computerSelection = computerPlay();
-        console.log("PLAYER: " + playerSelection);
-        console.log("COMPUTER: " + computerSelection);
-        let outcome = playRound(playerSelection, computerSelection);
-        console.log(outcome)
-
-        if (outcome.substring(4, 7) === "win") {
+            roundWinner = "Player";
             playerScore++;
-        } else if (outcome.substring(4, 8) === "lose") {
+        }
+    } else if (playerSelection === "Paper") {
+        if (computerSelection === "Rock") {
+            roundWinner = "Player"
+            playerScore++;
+        } else if (computerSelection === "Paper") {
+            roundWinner = "Tie";
+        } else {
+            roundWinner = "Computer";
             computerScore++;
         }
+    } else if (playerSelection === "Scissors") {
+        if (computerSelection === "Rock") {
+            roundWinner = "Computer";
+            computerScore++;
+        } else if (computerSelection === "Paper") {
+            roundWinner = "Player";
+            playerScore++;
+        } else {
+            roundWinner = "Tie";
+        }
     }
 
-    if (playerScore > computerScore) {
-        console.log("Congatulations! You won over 5 rounds")
-    } else if (playerScore === computerScore) {
-        console.log("It's a tie over 5 rounds")
-    } else {
-        console.log("Unfortunately you lost over 5 rounds")
+    updateMessageAndExplanation(roundWinner, playerSelection, computerSelection);
+}
+
+function isGameOver() {
+    return (playerScore === 5 || computerScore === 5)
+}
+
+
+// GUI
+
+const message = document.querySelector('.message');
+const explanation = document.querySelector('.explanation');
+const playerSelectionObject = document.querySelector('#player-selection');
+const playerScoreObject = document.querySelector('#player-score');
+const computerSelectionObject = document.querySelector('#computer-selection');
+const computerScoreObject = document.querySelector('#computer-score');
+const buttons = Array.from(document.querySelectorAll('button'));
+
+buttons.forEach(button => button.addEventListener('click', handleClick));
+
+function handleClick(e) {
+    if (isGameOver()) {
+        openFinalMessage();
+        return
+    }
+    
+    const playerSelection = e.target.textContent;
+    const computerSelection = getComputerSelection();
+    
+    playRound(playerSelection, computerSelection);
+    updateSelections(playerSelection, computerSelection);
+    updateScores();
+
+    if (isGameOver()) {
+        openFinalMessage();
+        return
     }
 }
 
-game()
+function updateMessageAndExplanation(winner, playerSelection, computerSelection) {
+    if (winner === "Player") {
+        message.textContent = "You win!";
+        explanation.textContent =  playerSelection + " beats " + computerSelection.toLowerCase();
+    } else if (winner === "Computer") {
+        message.textContent = "You lose!";
+        explanation.textContent = computerSelection + " beats " + playerSelection.toLowerCase();
+    } else {
+        message.textContent = "It's a tie!";
+        explanation.textContent = playerSelection + " ties with " + computerSelection.toLowerCase();
+    } 
+    return
+}
+
+function updateSelections(playerSelection, computerSelection) {
+    playerSelectionObject.textContent = playerSelection;
+    computerSelectionObject.textContent = computerSelection;
+}
+
+function updateScores() {
+    playerScoreObject.textContent = "Player: " + playerScore;
+    computerScoreObject.textContent = "Computer: " + computerScore;
+}
+
+function openFinalMessage() {
+    if (playerScore > computerScore) {
+        alert("You won!")
+    } else {
+        alert("You lost...")
+    }
+}

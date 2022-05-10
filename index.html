@@ -6,30 +6,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rock Paper Scissors</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="rock.ico">
 </head>
 <body>
 
-    <!-- https://michalosman.github.io/rock-paper-scissors/ -->
-
     <header>
-        Rock Paper Scissors
+        Rock, Paper and Scissors
     </header>
 
     <div class="content">
         <div class="scoreboard">
             <h2 class="message">
-                You won!
+                Choose your hand
             </h2>
             <h3 class="explanation">
-                Rock beats Scissors
+                First to score 5 points wins the game
             </h3>
             <div class="scores-container">
                 <div class="score-box">
-                    <div class="sign" id="player-sign">Rock</div>
-                    <div class="score" id="player-score">Player: 1</div>
+                    <div class="selection" id="player-selection">?</div>
+                    <div class="score" id="player-score">Player: 0</div>
                 </div>
                 <div class="score-box">
-                    <div class="sign" id="computer-sign">Scissors</div>
+                    <div class="selection" id="computer-selection">?</div>
                     <div class="score" id="computer-score">Computer: 0</div>
                 </div>
             </div>
